@@ -332,3 +332,4 @@ simple_business/media/
 !.envs/.local/
 
 db.sqlite3
+.idea
