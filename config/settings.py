@@ -41,7 +41,7 @@ DJANGO_APPS = [
 
 MY_APPS = ['base', 'dashboard','catalogue']
 
-THIRD_PARTY_APPS = ['extra_views','django_extensions',]
+THIRD_PARTY_APPS = ['extra_views','django_extensions','crispy_forms']
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,6 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
