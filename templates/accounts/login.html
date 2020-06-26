@@ -44,7 +44,11 @@
                     {% if form.errors %}
                         <p>Your username and password didn't match. Please try again.</p>
                     {% endif %}
-                  <form class="user" method="post" action="{% url 'login' %}">
+                    {% if next %}
+                    <form action="{% url 'login' %}?next={{next}}" method="post" >
+                    {%else%}
+                    {% endif %}
+                    <form class="user" method="post" action="{% url 'login' %}">
                       {% csrf_token %}
                     <div class="form-group">
                       <input type="username" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter username...">

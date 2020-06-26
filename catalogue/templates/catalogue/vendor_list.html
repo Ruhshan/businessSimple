@@ -3,12 +3,18 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Vendors</h1>
+
+</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="pull-left">
+        <a href="#" class="btn btn-primary">Create</a>
+    </div>
     <form class="form form-inline pull-right" action="{% url 'catalogue-vendor-list' %}">
             <input type="text" name="q" class="form-control" placeholder="search" value="{{request.GET.q}}" />
             <button class="btn btn-search btn-info">Search</button>
             <a href={{request.path}} class="btn btn-search btn-danger">Clear</a>
     </form>
-</div>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered" style="background-color: white">
