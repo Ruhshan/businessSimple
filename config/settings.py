@@ -39,9 +39,10 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MY_APPS = ['base', 'dashboard']
+MY_APPS = ['base', 'dashboard','catalogue']
 
-INSTALLED_APPS = DJANGO_APPS + MY_APPS
+THIRD_PARTY_APPS = ['extra_views','django_extensions',]
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

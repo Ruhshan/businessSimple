@@ -7,8 +7,8 @@ class BaseModel(models.Model):
     """
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey("auth.User", related_name="+", blank=True, null=True)
-    updated_by = models.ForeignKey("auth.User", related_name="+", blank=True, null=True)
+    created_by = models.ForeignKey("auth.User", related_name="+", blank=True, null=True, on_delete=models.PROTECT)
+    updated_by = models.ForeignKey("auth.User", related_name="+", blank=True, null=True, on_delete=models.PROTECT)
     version = models.IntegerField(default=0)
     is_locked = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
