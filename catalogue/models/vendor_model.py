@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from base.models import CodedBase
 from django.utils.translation import ugettext_lazy as _
@@ -11,6 +12,9 @@ class Vendor(CodedBase):
     phone = models.CharField(verbose_name=_("Phone"), blank=True, null=True, max_length=127)
     email = models.EmailField(verbose_name=_("Email"), blank=True, null=True)
     remarks = models.TextField(verbose_name=_("Remarks"), blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('catalogue-vendor-detail', args=[self.pk])
 
     class Meta:
         app_label = 'catalogue'

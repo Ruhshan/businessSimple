@@ -5,7 +5,7 @@
     <h1 class="h3 mb-0 text-gray-800">Details of <span class="fw-semi-bold">{{ object }}</span></h1>
 </div>
 
-    <div class="table-responsive" style="background-color: white">
+    <div class="table-responsive" style="background-color: white; margin-bottom: 20px">
         <table class="table">
             <tr>
                 <th>Code</th>
@@ -40,5 +40,8 @@
                 <td>{{ object.remarks }}</td>
             </tr>
         </table>
+    </div>
+    <div class="pull-left">
+        <a href="{% url 'catalogue-vendor-update' object.pk %}" class="btn btn-primary">Update</a>
     </div>
 {% endblock content %}
