@@ -3,26 +3,31 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from extra_views import SearchableListMixin, SortableListMixin
 from catalogue.models import Vendor
 
+
 class VendorListview(LoginRequiredMixin,
-        SearchableListMixin,
-        SortableListMixin,
-        ListView):
-        model = Vendor
-        search_fields = ['name','phone']
-        sort_fields = ['name','phone']
-        paginate_by = 10
+                     SearchableListMixin,
+                     SortableListMixin,
+                     ListView):
+    model = Vendor
+    search_fields = ['name', 'phone']
+    sort_fields = ['name', 'phone']
+    paginate_by = 10
 
 
 class VendorDetailView(LoginRequiredMixin, DetailView):
-        model = Vendor
+    model = Vendor
 
 
 class VendorCreateView(LoginRequiredMixin, CreateView):
-        model = Vendor
-        fields = ['name','phone','email','address','remarks']
+    model = Vendor
+    fields = ['name', 'phone', 'email', 'address', 'remarks']
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class VendorUpdateView(LoginRequiredMixin, UpdateView):
-        model = Vendor
-        template_name_suffix = '_update_form'
-        fields = ['name', 'phone', 'email', 'address', 'remarks']
-
+    model = Vendor
+    template_name_suffix = '_update_form'
+    fields = ['name', 'phone', 'email', 'address', 'remarks']

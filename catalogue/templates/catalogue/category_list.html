@@ -2,18 +2,17 @@
 {% block content %}
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Vendors</h1>
+    <h1 class="h3 mb-0 text-gray-800">Categories</h1>
 
 </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <div class="pull-left">
-        <a href="{% url 'catalogue-vendor-create' %}" class="btn btn-primary">Create</a>
+        <a href="{% url 'catalogue-category-create' %}" class="btn btn-primary">Create</a>
     </div>
-    <form class="form form-inline pull-right" action="{% url 'catalogue-vendor-list' %}">
+    <form class="form form-inline pull-right" action="{% url 'catalogue-category-list' %}">
             <input type="text" name="q" class="form-control" placeholder="search" value="{{request.GET.q}}" />
             <button class="btn btn-search btn-info">Search</button>
             <a href="{{ request.path }}" class="btn btn-danger">Clear</a>
-
     </form>
     </div>
 
@@ -29,22 +28,15 @@
                     <a href="{{ sort_helper.get_sort_query_by_name_desc }}"><i class="fa fa-caret-down"></i></a>
                 </th>
                 <th>
-                    Phone
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
                     Added By
                 </th>
             </thead>
             <tbody>
                 {% for obj in object_list %}
                    <tr>
-                    <td><a href="{% url 'catalogue-vendor-detail' obj.pk %}">{{ obj.code }}</a></td>
+                    <td><a href="{% url 'catalogue-category-detail' obj.pk %}">{{ obj.code }}</a></td>
                    <td>{{ obj.name }}</td>
-                   <td>{{ obj.phone }}</td>
-                   <td>{{ obj.email }}</td>
+
                    <td>{{ obj.created_by }}</td>
                    </tr>
                 {% endfor %}
