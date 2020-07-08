@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Details of <span class="fw-semi-bold">{{ object }}</span></h1>
+</div>
+
+    <div class="table-responsive" style="background-color: white; margin-bottom: 20px">
+        <table class="table">
+            <tr>
+                <th>Code</th>
+                <td>{{ object.code }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ object.category.name }}</td>
+            </tr>
+            <tr>
+                <th>Vendor</th>
+                <td>{{ object.vendor.name }}</td>
+            </tr>
+            <tr>
+                <th>Created At</th>
+                <td>{{ object.created_at }}</td>
+            </tr>
+            <tr>
+                <th>Created by</th>
+                <td>{{ object.created_by }}</td>
+            </tr>
+            <tr>
+               <th>Remarks</th>
+                <td>{{ object.remarks }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="pull-left">
+        <a href="{% url 'catalogue-product-update' object.pk %}" class="btn btn-primary">Update</a>
+        <a href="{% url 'catalogue-product-list' %}" class="btn btn-info">List</a>
+    </div>
+    <div>
+        <a href="#" class="btn btn-danger">Delete</a>
+    </div>
+    </div>
+
+{% endblock content %}
