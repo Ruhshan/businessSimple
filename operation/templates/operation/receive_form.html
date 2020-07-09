@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Receive Product</h1>
+</div>
+    <div style="margin-bottom: 20px">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.name != 'date' %}
+                {{ field|as_crispy_field }}
+            {% else %}
+                <div class="form-group" id="div_id_date">
+                <label for="id_date" class=" requiredField">{{ field.label }}<span class="asteriskField">*</span> </label>
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+                               name="date" id="id_date" required/>
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a  class="btn btn-danger" href="{% url 'operation-receive-list' %}">Cancel</a>
+    </form>
+    </div>
+
+{% endblock content %}
+
+{% block page_scripts %}
+    <script type="text/javascript" src="{% static 'vendor/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'L'
+                });
+            });
+    </script>
+
+{% endblock page_scripts %}
+
+{% block page_head %}
+    <link rel="stylesheet" href="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.css' %}" />
+{% endblock page_head %}

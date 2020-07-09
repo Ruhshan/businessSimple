@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='accounts/login.html'), name='logout'),
     path('',login_required(TemplateView.as_view(template_name='dashboard/dashboard.html'), login_url='login')),
 
-    path('catalogue/',include('catalogue.urls'))
+    path('catalogue/',include('catalogue.urls')),
+    path('operation/',include('operation.urls'))
 
 ]
