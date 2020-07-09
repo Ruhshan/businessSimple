@@ -13,6 +13,10 @@ class Receive(CodedBase):
     date = models.DateField(verbose_name=_("Receive Date"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
 
+    def get_absolute_url(self):
+        return reverse('operation-receive-detail', args=[self.pk])
+
+
     class Meta:
         app_label = 'operation'
         ordering = ['code']

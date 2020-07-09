@@ -10,8 +10,8 @@ class ReceiveListView(LoginRequiredMixin,
         SortableListMixin,
         ListView):
     model = Receive
-    search_fields = ['product']
-    sort_fields = ['date','product']
+    search_fields = ['product__name']
+    sort_fields = ['date', 'product__name']
     paginate_by = 10
 
 
@@ -22,3 +22,13 @@ class ReceiveCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+
+class ReceiveDetailView(LoginRequiredMixin, DetailView):
+    model = Receive
+
+
+class ReceiveUpdateView(LoginRequiredMixin, UpdateView):
+    model = Receive
+    fields = ['product', 'unit', 'date', 'receipt_no']
+    template_name_suffix = '_update_form'
