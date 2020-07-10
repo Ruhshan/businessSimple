@@ -9,11 +9,12 @@ from catalogue.models import Product
 class DailySummary(CodedBase):
     _prefix = 'SUM'
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    stockStart = models.IntegerField()
-    stockEnd = models.IntegerField()
-    totalReceived = models.IntegerField()
-    totalIssued = models.IntegerField()
-    totalReturned = models.IntegerField()
+    stockStart = models.IntegerField(default=0)
+    stockEnd = models.IntegerField(default=0)
+    totalReceived = models.IntegerField(default=0)
+    totalIssued = models.IntegerField(default=0)
+    totalReturned = models.IntegerField(default=0)
+    date = models.DateField()
 
     class Meta:
         app_label = 'operation'
