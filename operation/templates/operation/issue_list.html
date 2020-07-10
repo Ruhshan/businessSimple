@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Issued Products</h1>
+
+</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="pull-left">
+        <a href="{% url 'operation-issue-create' %}" class="btn btn-primary">Issue</a>
+    </div>
+    <form class="form form-inline pull-right" action="{% url 'operation-issue-list' %}">
+            <input type="text" name="q" class="form-control" placeholder="search" value="{{request.GET.q}}" />
+            <button class="btn btn-search btn-info">Search</button>
+            <a href="{{ request.path }}" class="btn btn-danger">Clear</a>
+    </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" style="background-color: white">
+            <thead>
+                <th>
+                    #
+                </th>
+                <th>
+                    <a href="{{ sort_helper.get_sort_query_by_product__name_asc }}"><i class="fa fa-caret-up"></i></a>
+                    Product
+                    <a href="{{ sort_helper.get_sort_query_by_product__name_desc }}"><i class="fa fa-caret-down"></i></a>
+                </th>
+                <th>
+                    Issued By
+                </th>
+                <th>
+                    <a href="{{ sort_helper.get_sort_query_by_date_asc }}"><i class="fa fa-caret-up"></i></a>
+                    Issued At
+                    <a href="{{ sort_helper.get_sort_query_by_date_desc }}"><i class="fa fa-caret-down"></i></a>
+                </th>
+                <th>
+                    Number of units
+                </th>
+            </thead>
+            <tbody>
+                {% for obj in object_list %}
+                   <tr>
+                    <td><a href="{% url 'operation-issue-detail' obj.id %}">{{ obj.code }}</a></td>
+                   <td>{{ obj.product }}</td>
+
+                   <td>{{ obj.created_by }}</td>
+                   <td>{{ obj.date }}</td>
+                   <td>{{ obj.unit }}</td>
+                   </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% if is_paginated %}
+
+                <ul class="pagination pagination-small">
+                    <li class="prev {%if not page_obj.has_previous%}disabled{%endif%}">
+                        <a class="page-link" href="{%if page_obj.has_previous%}?page={{ page_obj.previous_page_number }}{%endif%}">
+                            Prev
+                        </a>
+                    </li>
+                    {%for page in page_obj.paginator.page_range%}
+                        {%if page == page_obj.number%}
+                            <li class="page-item active"><a class="page-link" href="">{{ page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                        {%endif%}
+                    {%endfor%}
+                    <li class="next {%if not page_obj.has_next%}disabled{%endif%}">
+                        <a class="page-link" href="{%if page_obj.has_next%}?page={{ page_obj.next_page_number }}{%endif%}">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+
+        {% endif%}
+    </div>
+{% endblock content %}

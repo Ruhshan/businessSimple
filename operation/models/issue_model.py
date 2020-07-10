@@ -14,6 +14,9 @@ class Issue(CodedBase):
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
     customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
 
+    def get_absolute_url(self):
+        return reverse('operation-issue-detail', args=[self.pk])
+
     class Meta:
         app_label = 'operation'
         ordering = ['code']

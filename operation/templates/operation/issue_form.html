@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Update {{ object }}</h1>
+    <h1 class="h3 mb-0 text-gray-800">Issue Product</h1>
 </div>
     <div style="margin-bottom: 20px">
     <form method="post">
@@ -27,8 +27,8 @@
         {% endfor %}
 
 
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a  class="btn btn-danger" href="{% url 'operation-receive-list' %}">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a  class="btn btn-danger" href="{% url 'operation-issue-list' %}">Cancel</a>
     </form>
     </div>
 
