@@ -6,19 +6,17 @@ from django.utils.translation import ugettext_lazy as _
 from catalogue.models import Product
 
 
-class Receive(CodedBase):
-    _prefix = "RECV"
+class Issue(CodedBase):
+    _prefix = "ISSU"
     product = models.ForeignKey(Product, related_name="+", on_delete=models.DO_NOTHING)
     unit = models.IntegerField(verbose_name=_("Units"))
-    date = models.DateField(verbose_name=_("Receive Date"))
+    date = models.DateField(verbose_name=_("Issue Date"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
-
-    def get_absolute_url(self):
-        return reverse('operation-receive-detail', args=[self.pk])
+    customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
 
     class Meta:
         app_label = 'operation'
         ordering = ['code']
-        verbose_name = _("Receive Product")
-        verbose_name_plural = _("Received Products")
-        get_latest_by = "created_at"
+        verbose_name = _("Issue Product")
+        verbose_name_plural = _("Issue Products")
+        get_latest_by = "date"
