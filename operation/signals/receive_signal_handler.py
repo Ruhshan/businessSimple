@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db.models import F
 
+
 @receiver(pre_save, sender = Receive)
 def receive_save_handler(sender, instance, **kwargs):
     if instance.id:
@@ -50,6 +51,7 @@ def insert_within(instance):
 def summary_get_or_create(product, date):
     return DailySummary.objects.get_or_create(product=product, date=date)
 
+
 def update_stock_for_product_after_date(product, unit, date):
     updatables = DailySummary.objects.filter(product=product, date__gt=date)
 
@@ -60,12 +62,17 @@ def update_stock_for_product_after_date(product, unit, date):
 def get_last_summary(instance):
     return DailySummary.objects.filter(product=instance.product, date__lt=instance.date).order_by('date').last()
 
+
 def handle_instance_update(instance):
     old_instance = Receive.objects.get(id = instance.id)
-    if old_instance.date != instance.date:
+    if old_instance.date != instance.date and old_instance.unit == instance.unit:
         handle_date_update(old_instance, instance)
-    else:
+    elif old_instance.date == instance.date and old_instance.unit != instance.unit:
         handle_unit_change(old_instance, instance)
+    elif old_instance.date != instance.date and old_instance.unit != instance.unit:
+        handle_date_unit_update(old_instance, instance)
+    else:
+        pass
 
 
 def handle_date_update(old_instance, new_instance):
@@ -73,6 +80,18 @@ def handle_date_update(old_instance, new_instance):
 
 
 def handle_unit_change(old_instance, new_instance):
-    pass
+    difference = new_instance.unit - old_instance.unit
+    daily_summary = DailySummary.objects.get(date=new_instance.date, product=old_instance.product)
 
+    daily_summary.stockEnd += difference
+    daily_summary.totalReceived += difference
+
+    daily_summary.save()
+
+    update_stock_for_product_after_date(new_instance.product, difference, new_instance.date)
+
+
+
+def handle_date_unit_update(old_instance, new_instance):
+    pass
 
