@@ -63,35 +63,15 @@ def get_last_summary(instance):
     return DailySummary.objects.filter(product=instance.product, date__lt=instance.date).order_by('date').last()
 
 
-def handle_instance_update(instance):
-    old_instance = Receive.objects.get(id = instance.id)
-    if old_instance.date != instance.date and old_instance.unit == instance.unit:
-        handle_date_update(old_instance, instance)
-    elif old_instance.date == instance.date and old_instance.unit != instance.unit:
-        handle_unit_change(old_instance, instance)
-    elif old_instance.date != instance.date and old_instance.unit != instance.unit:
-        handle_date_unit_update(old_instance, instance)
-    else:
-        pass
+def handle_instance_update(new_instance):
+    old_instance = Receive.objects.get(id = new_instance.id)
+    daily_summary_old = DailySummary.objects.get(product=old_instance.product, date=old_instance.date)
+    daily_summary_old.stockEnd -= old_instance.unit
+    daily_summary_old.totalReceived -= old_instance.unit
+    daily_summary_old.save()
 
+    update_stock_for_product_after_date(old_instance.product, -1 * old_instance.unit, old_instance.date)
 
-def handle_date_update(old_instance, new_instance):
-    pass
+    handle_instance_creation(new_instance)
 
-
-def handle_unit_change(old_instance, new_instance):
-    difference = new_instance.unit - old_instance.unit
-    daily_summary = DailySummary.objects.get(date=new_instance.date, product=old_instance.product)
-
-    daily_summary.stockEnd += difference
-    daily_summary.totalReceived += difference
-
-    daily_summary.save()
-
-    update_stock_for_product_after_date(new_instance.product, difference, new_instance.date)
-
-
-
-def handle_date_unit_update(old_instance, new_instance):
-    pass
 
