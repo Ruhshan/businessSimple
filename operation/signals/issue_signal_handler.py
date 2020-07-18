@@ -3,7 +3,8 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db.models import F
 
-@receiver(pre_save, sender = Issue)
+
+@receiver(pre_save, sender=Issue)
 def issue_save_handler(sender, instance, **kwargs):
     if instance.id:
         handle_instance_update(instance)
@@ -35,7 +36,7 @@ def update_stock_for_product_after_date(product, unit, date):
     updatables = DailySummary.objects.filter(product=product, date__gt=date)
 
     if updatables.exists():
-        updatables.update(stockStart = F('stockStart')-unit, stockEnd = F('stockEnd')-unit)
+        updatables.update(stockStart=F('stockStart') - unit, stockEnd=F('stockEnd') - unit)
 
 
 def summary_get_or_create(product, date):
@@ -43,12 +44,12 @@ def summary_get_or_create(product, date):
 
 
 def handle_instance_update(new_instance):
-    old_instance = Issue.objects.get(id = new_instance.id)
+    old_instance = Issue.objects.get(id=new_instance.id)
     daily_summary_old = DailySummary.objects.get(product=old_instance.product, date=old_instance.date)
     daily_summary_old.stockEnd += old_instance.unit
     daily_summary_old.totalIssued -= old_instance.unit
     daily_summary_old.save()
 
-    update_stock_for_product_after_date(old_instance.product, -1*old_instance.unit, old_instance.date)
+    update_stock_for_product_after_date(old_instance.product, -1 * old_instance.unit, old_instance.date)
 
     handle_instance_creation(new_instance)

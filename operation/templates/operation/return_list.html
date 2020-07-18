@@ -7,7 +7,7 @@
 </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <div class="pull-left">
-        <a href="{% url 'operation-return-create' %}" class="btn btn-primary">Issue</a>
+        <a href="{% url 'operation-return-create' %}" class="btn btn-primary">Return</a>
     </div>
     <form class="form form-inline pull-right" action="{% url 'operation-issue-list' %}">
             <input type="text" name="q" class="form-control" placeholder="search" value="{{request.GET.q}}" />
