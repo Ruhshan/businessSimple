@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from extra_views import SearchableListMixin, SortableListMixin
-
+from operation.forms import ReceiveUpdateForm
 from operation.models import Receive
 
 
@@ -30,5 +30,5 @@ class ReceiveDetailView(LoginRequiredMixin, DetailView):
 
 class ReceiveUpdateView(LoginRequiredMixin, UpdateView):
     model = Receive
-    fields = ['product', 'unit', 'date', 'receipt_no']
+    form_class = ReceiveUpdateForm
     template_name_suffix = '_update_form'

@@ -14,15 +14,25 @@
                 {{ field|as_crispy_field }}
             {% else %}
                 <div class="form-group" id="div_id_date">
-                <label for="id_date" class=" requiredField">{{ field.label }}<span class="asteriskField">*</span> </label>
+                <label for="id_date" class="requiredField">{{ field.label }}<span class="asteriskField">*</span> </label>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+
+                        <input type="text"
+                               class="{% if field.errors %}is-invalid{% endif %} form-control datetimepicker-input"
+                               data-target="#datetimepicker1"
                                name="date" id="id_date" required/>
+
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
+                {% for error in field.errors %}
+                <p>
+                    <span style="color: red">{{ error|escape }}</span>
+                </p>
+                {% endfor %}
                 </div>
+
             {% endif %}
         {% endfor %}
 
@@ -42,7 +52,7 @@
             $(function () {
                 $('#datetimepicker1').datetimepicker({
                     format: 'L',
-                    defaultDate: '{{ object.date }}'
+                    defaultDate: '{{ form.date.value }}'
                 });
             });
     </script>
