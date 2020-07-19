@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from extra_views import SearchableListMixin, SortableListMixin
-from operation.forms import ReceiveUpdateForm
+from operation.forms import ReceiveForm
 from operation.models import Receive
 
 
@@ -17,7 +17,7 @@ class ReceiveListView(LoginRequiredMixin,
 
 class ReceiveCreateView(LoginRequiredMixin, CreateView):
     model = Receive
-    fields = ['product', 'unit', 'date', 'receipt_no']
+    form_class = ReceiveForm
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -30,5 +30,5 @@ class ReceiveDetailView(LoginRequiredMixin, DetailView):
 
 class ReceiveUpdateView(LoginRequiredMixin, UpdateView):
     model = Receive
-    form_class = ReceiveUpdateForm
+    form_class = ReceiveForm
     template_name_suffix = '_update_form'

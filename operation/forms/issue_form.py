@@ -1,8 +1,8 @@
 from django.forms import ModelForm, ValidationError
-from operation.models import Receive
+from operation.models import Issue
 import datetime
 
-class ReceiveUpdateForm(ModelForm):
+class IssueForm(ModelForm):
     def clean_date(self):
         today = datetime.datetime.today().date()
         form_date = self.cleaned_data['date']
@@ -11,5 +11,5 @@ class ReceiveUpdateForm(ModelForm):
         return form_date
 
     class Meta:
-        model = Receive
-        fields = ['product', 'unit', 'date', 'receipt_no']
+        model = Issue
+        fields = ['product', 'unit', 'date', 'receipt_no', 'customer']

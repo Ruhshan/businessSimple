@@ -3,11 +3,11 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from extra_views import SearchableListMixin, SortableListMixin
 
 from operation.models import Return
-
+from operation.forms import ReturnForm
 
 class ReturnCreateView(LoginRequiredMixin, CreateView):
     model = Return
-    fields = ['product', 'unit', 'date', 'receipt_no', 'customer','remarks']
+    form_class = ReturnForm
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -30,5 +30,5 @@ class ReturnListView(LoginRequiredMixin,
 
 class ReturnUpdateView(LoginRequiredMixin, UpdateView):
     model = Return
-    fields = ['product', 'unit', 'date', 'receipt_no', 'customer', 'remarks']
+    form_class = ReturnForm
     template_name_suffix = '_update_form'
