@@ -10,12 +10,6 @@ class ReceiveUpdateForm(ModelForm):
             raise ValidationError("Future date is not allowed")
         return form_date
 
-    def clean_unit(self):
-        form_unit = self.cleaned_data['unit']
-        if form_unit<0:
-            raise ValidationError("Unit cannot be negative")
-        return form_unit
-
     class Meta:
         model = Receive
         fields = ['product', 'unit', 'date', 'receipt_no']

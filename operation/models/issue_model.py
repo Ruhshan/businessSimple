@@ -9,7 +9,7 @@ from catalogue.models import Product
 class Issue(CodedBase):
     _prefix = "ISSU"
     product = models.ForeignKey(Product, related_name="+", on_delete=models.DO_NOTHING)
-    unit = models.IntegerField(verbose_name=_("Units"))
+    unit = models.PositiveIntegerField(verbose_name=_("Units"))
     date = models.DateField(verbose_name=_("Issue Date"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
     customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
