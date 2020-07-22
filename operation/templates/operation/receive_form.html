@@ -31,10 +31,11 @@
 
     <script type="text/javascript">
             $(function () {
-                $('#datetimepicker1').datetimepicker({
-                    format: 'L',
-                    defaultDate: '{{ form.date.value }}'
-                });
+                {% if form.date.value %}
+                $('#datetimepicker1').datetimepicker({format: 'L', defaultDate : '{{ form.date.value }}'});
+                {% else %}
+                $('#datetimepicker1').datetimepicker({format: 'L'});
+                {% endif %}
             });
     </script>
 
