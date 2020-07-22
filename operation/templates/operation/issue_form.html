@@ -29,12 +29,14 @@
     <script type="text/javascript" src="{% static 'vendor/moment/moment.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
 
+
     <script type="text/javascript">
             $(function () {
-                $('#datetimepicker1').datetimepicker({
-                    format: 'L',
-                    defaultDate : '{{ form.date.value }}'
-                });
+                {% if form.date.value %}
+                $('#datetimepicker1').datetimepicker({format: 'L', defaultDate : '{{ form.date.value }}'});
+                {% else %}
+                $('#datetimepicker1').datetimepicker({format: 'L'});
+                {% endif %}
             });
     </script>
 
