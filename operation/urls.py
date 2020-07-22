@@ -2,6 +2,7 @@ from django.urls import path
 from operation.views import ReceiveListView, ReceiveCreateView, ReceiveDetailView, ReceiveUpdateView
 from operation.views import IssueCreateView, IssueDetailView, IssueListView, IssueUpdateView
 from operation.views import ReturnCreateView, ReturnDetailView, ReturnListView, ReturnUpdateView
+from operation.views import DailySummaryListView
 
 urlpatterns = [
     path('receive/list', ReceiveListView.as_view(), name='operation-receive-list'),
@@ -17,5 +18,7 @@ urlpatterns = [
     path('return/create', ReturnCreateView.as_view(), name="operation-return-create"),
     path('return/detail/<int:pk>', ReturnDetailView.as_view(), name="operation-return-detail"),
     path('return/list', ReturnListView.as_view(), name='operation-return-list'),
-    path('return/update/<int:pk>', ReturnUpdateView.as_view(), name='operation-return-update')
+    path('return/update/<int:pk>', ReturnUpdateView.as_view(), name='operation-return-update'),
+
+    path('summary/list', DailySummaryListView.as_view(), name='daily-summary-list')
 ]
