@@ -20,6 +20,10 @@ class DailySummaryManager(models.Manager):
             obj.save()
         return obj
 
+    def get_summary_after_date(self, product, form_date):
+        return self.filter(product=product, date__gte=form_date).order_by('date')
+
+
 class DailySummary(CodedBase):
     _prefix = 'SUM'
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
