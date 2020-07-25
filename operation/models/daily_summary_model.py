@@ -23,6 +23,24 @@ class DailySummaryManager(models.Manager):
     def get_summary_after_date(self, product, form_date):
         return self.filter(product=product, date__gte=form_date).order_by('date')
 
+    def get_stock_for_today(self):
+        raw_query = """
+                SELECT * FROM (
+                SELECT *,
+                ROW_NUMBER() OVER (PARTITION BY "operation_dailysummary"."product_id" ORDER BY "operation_dailysummary"."date" DESC) AS "row_number" 
+                FROM "operation_dailysummary" ORDER BY "operation_dailysummary"."code" ASC) as t where t."row_number" = 1;
+            """
+
+    def get_stock_for_date(self,date):
+        raw_query = """
+                        SELECT * FROM (
+                        SELECT *,
+                        ROW_NUMBER() OVER (PARTITION BY "operation_dailysummary"."product_id" ORDER BY "operation_dailysummary"."date" DESC) AS "row_number" 
+                        FROM "operation_dailysummary" WHERE "operation_dailysummary"."date"<= '{date}' ORDER BY "operation_dailysummary"."code" ASC) as t where t."row_number" = 1;
+                    """.format(date=date.strftime("%Y-%m-%d"))
+
+        return self.raw(raw_query)
+
 
 class DailySummary(CodedBase):
     _prefix = 'SUM'

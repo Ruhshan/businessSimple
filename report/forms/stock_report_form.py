@@ -15,17 +15,24 @@ class StockReportForm(forms.Form):
     product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
     date = forms.DateTimeField(
         widget=BootstrapDateTimePickerInput(),
-        required=False
+        required=True
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
+
         self.helper.layout = Layout(
             Row(
                 Column('product', css_class='form-group col-md-4 mb-0'),
                 Column('date', css_class='form-group col-md-4 mb-0'),
-                css_class='form-row'
+                Column(
+                    bootstrap.FormActions(
+                        layout.Submit('submit', 'Search', css_class='btn btn-primary')),
+                    css_class='search-button'
+                ),
+                css_class='form-row',
+
             )
         )
