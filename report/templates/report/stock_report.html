@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="jumbotron">
+        <form method="post">
+        {% csrf_token %}
+         {% crispy form %}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+
+
+    </div>
+
+{% endblock content %}
+
+{% block page_scripts %}
+    <script type="text/javascript" src="{% static 'vendor/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#datetimepicker_date").datetimepicker({format: 'L'});
+        });
+    </script>
+
+{% endblock page_scripts %}
+
+{% block page_head %}
+    <link rel="stylesheet" href="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.css' %}" />
+{% endblock page_head %}

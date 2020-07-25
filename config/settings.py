@@ -39,7 +39,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MY_APPS = ['base', 'dashboard','catalogue','operation']
+MY_APPS = ['base', 'dashboard','catalogue','operation','report']
 
 THIRD_PARTY_APPS = ['extra_views','django_extensions','crispy_forms']
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS

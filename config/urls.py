@@ -26,6 +26,7 @@ urlpatterns = [
     path('',login_required(TemplateView.as_view(template_name='dashboard/dashboard.html'), login_url='login')),
 
     path('catalogue/',include('catalogue.urls')),
-    path('operation/',include('operation.urls'))
+    path('operation/',include('operation.urls')),
+    path('report/', include('report.urls'))
 
 ]
