@@ -30,6 +30,7 @@ class DailySummaryManager(models.Manager):
                 ROW_NUMBER() OVER (PARTITION BY "operation_dailysummary"."product_id" ORDER BY "operation_dailysummary"."date" DESC) AS "row_number" 
                 FROM "operation_dailysummary" ORDER BY "operation_dailysummary"."code" ASC) as t where t."row_number" = 1;
             """
+        return self.raw(raw_query)
 
     def get_stock_for_date(self,date):
         raw_query = """
