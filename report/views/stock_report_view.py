@@ -14,7 +14,7 @@ class StockReportView(LoginRequiredMixin,View):
         form = StockReportForm(request.POST)
 
         if form.is_valid():
-            todays_stock = DailySummary.objects.get_stock_for_date(form.cleaned_data.get('date'))
+            todays_stock = DailySummary.objects.get_stock_for_date(form.cleaned_data.get('date'), form.cleaned_data.get('product'))
             return render(request, 'report/stock_report.html', {'form': form, 'stocks': todays_stock})
 
         return render(request, 'report/stock_report.html', {'form': form})

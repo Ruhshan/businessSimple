@@ -32,13 +32,13 @@ class DailySummaryManager(models.Manager):
             """
         return self.raw(raw_query)
 
-    def get_stock_for_date(self,date):
+    def get_stock_for_date(self,date, product=None):
         raw_query = """
                         SELECT * FROM (
                         SELECT *,
                         ROW_NUMBER() OVER (PARTITION BY "operation_dailysummary"."product_id" ORDER BY "operation_dailysummary"."date" DESC) AS "row_number" 
-                        FROM "operation_dailysummary" WHERE "operation_dailysummary"."date"<= '{date}' ORDER BY "operation_dailysummary"."code" ASC) as t where t."row_number" = 1;
-                    """.format(date=date.strftime("%Y-%m-%d"))
+                        FROM "operation_dailysummary" WHERE "operation_dailysummary"."date"<= '{date}' and "operation_dailysummary"."product_id" {pv} ORDER BY "operation_dailysummary"."code" ASC) as t where t."row_number" = 1;
+                    """.format(date=date.strftime("%Y-%m-%d"), pv="= "+str(product.id) if product is not None else 'is not null')
 
         return self.raw(raw_query)
 
