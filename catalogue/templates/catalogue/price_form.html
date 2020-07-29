@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Create Price</h1>
+</div>
+    <div style="margin-bottom: 20px">
+    <form method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a  class="btn btn-danger" href="#">Cancel</a>
+    </form>
+    </div>
+
+{% endblock content %}
+
+{% block page_scripts %}
+    <script type="text/javascript" src="{% static 'vendor/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#datetimepicker_validFrom").datetimepicker({format: 'L'});
+            $("#datetimepicker_validThrough").datetimepicker({format: 'L'});
+        });
+    </script>
+
+{% endblock page_scripts %}
+
+
+{% block page_head %}
+    <link rel="stylesheet" href="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.css' %}" />
+{% endblock page_head %}

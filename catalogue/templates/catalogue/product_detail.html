@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Details of <span class="fw-semi-bold">{{ object }}</span></h1>
+    <h1 class="h3 mb-0 text-gray-800">Details of <span class="fw-semi-bold">{{ object.name }}</span></h1>
 </div>
 
     <div class="table-responsive" style="background-color: white; margin-bottom: 20px">
@@ -47,4 +47,13 @@
     </div>
     </div>
 
+<div class="jumbotron">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h4 mb-0 text-gray-800">Prices of <span class="fw-semi-bold">{{ object.name }}</span></h1>
+</div>
+<div class="pull-left">
+    <button class="btn btn-primary">Add Price</button>
+</div>
+
+</div>
 {% endblock content %}
