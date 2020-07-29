@@ -8,7 +8,7 @@ from catalogue.models import Product
 
 class Receive(CodedBase):
     _prefix = "RECV"
-    product = models.ForeignKey(Product, related_name="+", on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
     unit = models.PositiveIntegerField(verbose_name=_("Units"))
     date = models.DateField(verbose_name=_("Receive Date"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
