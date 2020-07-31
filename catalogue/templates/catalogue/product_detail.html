@@ -47,10 +47,47 @@
     </div>
     </div>
 
-<div class="jumbotron">
+<div class="jumbotron" style="padding: 20px!important;">
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h4 mb-0 text-gray-800">Prices of <span class="fw-semi-bold">{{ object.name }}</span></h1>
 </div>
+    <div class="table-responsive" style="background-color: white; margin-bottom: 20px">
+        <table class="table table-striped">
+            <thead>
+                <th>
+                    Price Code
+                </th>
+                <th>
+                    Valid From
+                </th>
+                <th>
+                    Valid Through
+                </th>
+                <th>
+                    Buying
+                </th>
+                <th>
+                    Selling
+                </th>
+                <th>
+                    Is active
+                </th>
+            </thead>
+            <tbody>
+                {% for price in prices %}
+                    <tr>
+                        <td>{{ price.code }}</td>
+                        <td>{{ price.validFrom }}</td>
+                        <td>{{ price.validThrough }}</td>
+                        <td>{{ price.buying }} Tk.</td>
+                        <td>{{ price.selling }} Tk.</td>
+                        <td>{{ price.isActive }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 <div class="pull-left">
     <button class="btn btn-primary">Add Price</button>
 </div>

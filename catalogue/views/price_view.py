@@ -13,7 +13,7 @@ class PriceCreateView(LoginRequiredMixin, CreateView):
         if form_class is None:
             form_class = self.get_form_class()
         form_kwargs = self.get_form_kwargs()
-        form_kwargs['initial'] = {'product':self.kwargs['product_id']}
+        form_kwargs['initial']['product']=self.kwargs['product_id']
         form_obj = form_class(**form_kwargs)
         return form_obj
 

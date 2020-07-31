@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from extra_views import SearchableListMixin, SortableListMixin
 
-from catalogue.models import Product
+from catalogue.models import Product, Price
 
 
 class ProductListView(LoginRequiredMixin, SearchableListMixin,
@@ -15,6 +15,12 @@ class ProductListView(LoginRequiredMixin, SearchableListMixin,
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView,self).get_context_data(**kwargs)
+        prices = Price.objects.filter(product=context['object'])
+        context['prices'] = prices
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
