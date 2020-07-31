@@ -72,6 +72,9 @@
                 <th>
                     Is active
                 </th>
+                <th>
+                    Action
+                </th>
             </thead>
             <tbody>
                 {% for price in prices %}
@@ -82,6 +85,9 @@
                         <td>{{ price.buying }} Tk.</td>
                         <td>{{ price.selling }} Tk.</td>
                         <td>{{ price.isActive }}</td>
+                        <td>
+                            <a href="{% url 'catalogue-price-update' price.pk object.id %}" class="btn btn-primary">Update</a>
+                        </td>
                     </tr>
 
                 {% endfor %}
@@ -89,7 +95,7 @@
         </table>
     </div>
 <div class="pull-left">
-    <button class="btn btn-primary">Add Price</button>
+    <a class="btn btn-primary" href="{% url 'catalogue-price-create' product_id=object.pk %}">Add Price</a>
 </div>
 
 </div>

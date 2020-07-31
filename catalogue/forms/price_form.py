@@ -4,6 +4,10 @@ from report.widgets import BootstrapDateTimePickerInput
 
 
 class PriceForm(ModelForm):
+    def clean_validThrough(self):
+        data = self.cleaned_data['validThrough']
+        return data
+
     class Meta:
         model = Price
         fields = ['product', 'validFrom', 'validThrough', 'buying', 'selling', 'isActive']

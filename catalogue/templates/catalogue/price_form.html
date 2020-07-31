@@ -24,8 +24,27 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#datetimepicker_validFrom").datetimepicker({format: 'L'});
-            $("#datetimepicker_validThrough").datetimepicker({format: 'L'});
+            {% if form.validFrom.value %}
+                $('#datetimepicker_validFrom').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    defaultDate: '{{ form.validFrom.value|date:"Y-m-d" }}'
+                });
+            {% else %}
+                $('#datetimepicker_validFrom').datetimepicker({format: 'YYYY-MM-DD'});
+            {% endif %}
+
+            {% if form.validThrough.value %}
+                $('#datetimepicker_validThrough').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    defaultDate: '{{ form.validThrough.value|date:"Y-m-d" }}'
+                });
+            {% else %}
+                $('#datetimepicker_validThrough').datetimepicker({format: 'YYYY-MM-DD'});
+            {% endif %}
+
+
+
+
         });
     </script>
 
