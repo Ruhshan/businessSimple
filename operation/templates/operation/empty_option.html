@@ -1,0 +1,6 @@
+<select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+    <option>-------</option>
+    {% verbatim %}
+    <option v-for="price in prices" :value="price.id">{{ price.buying }}</option>
+    {% endverbatim %}
+</select>

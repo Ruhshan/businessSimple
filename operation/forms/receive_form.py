@@ -5,7 +5,10 @@ from operation.widgets import VueSelect
 
 
 class ReceiveForm(ModelForm):
-    price = ChoiceField(widget=VueSelect())
+
+    def clean_price(self):
+        data = self.cleaned_data['price']
+        return data
 
     def clean_date(self):
         today = datetime.datetime.today().date()
@@ -18,5 +21,6 @@ class ReceiveForm(ModelForm):
         model = Receive
         fields = ['product', 'price','unit', 'date', 'receipt_no']
         widgets = {
-            'product': Select(attrs={'v-model':'product'})
+            'product': Select(attrs={'v-model':'product'}),
+            'price':VueSelect()
         }

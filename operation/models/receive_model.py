@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from base.models import CodedBase
 from django.utils.translation import ugettext_lazy as _
-from catalogue.models import Product
+from catalogue.models import Product, Price
 
 
 class Receive(CodedBase):
@@ -11,6 +11,7 @@ class Receive(CodedBase):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
     unit = models.PositiveIntegerField(verbose_name=_("Units"))
     date = models.DateField(verbose_name=_("Receive Date"))
+    price = models.ForeignKey(Price, on_delete=models.CASCADE)
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
 
     def get_absolute_url(self):
