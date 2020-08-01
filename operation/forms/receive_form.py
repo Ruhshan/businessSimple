@@ -1,9 +1,12 @@
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, Select, ChoiceField
 from operation.models import Receive
 import datetime
+from operation.widgets import VueSelect
 
 
 class ReceiveForm(ModelForm):
+    price = ChoiceField(widget=VueSelect())
+
     def clean_date(self):
         today = datetime.datetime.today().date()
         form_date = self.cleaned_data['date']
@@ -13,4 +16,7 @@ class ReceiveForm(ModelForm):
 
     class Meta:
         model = Receive
-        fields = ['product', 'unit', 'date', 'receipt_no']
+        fields = ['product', 'price','unit', 'date', 'receipt_no']
+        widgets = {
+            'product': Select(attrs={'v-model':'product'})
+        }

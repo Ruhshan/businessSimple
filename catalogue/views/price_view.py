@@ -3,6 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from catalogue.models import Price, Product
 from catalogue.forms import PriceForm
+from django.http import JsonResponse
+from django.db.models import F
+
 
 
 class PriceCreateView(LoginRequiredMixin, CreateView):
@@ -34,3 +37,9 @@ class PriceUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('catalogue-product-detail',args=(self.kwargs['product_id'],))
+
+def get_price_for_product(request,product_id):
+    prices = Price.objects.filter(product_id=product_id, isActive=True)\
+        .values("id","buying","selling")
+
+    return JsonResponse(list(prices),safe=False)

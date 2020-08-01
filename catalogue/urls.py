@@ -3,7 +3,7 @@ from django.urls import path
 from .views import VendorListview, VendorDetailView, VendorCreateView, VendorUpdateView
 from .views import CategoryListView, CategoryCreateView, CategoryDetailView, CategoryUpdateView
 from .views import ProductCreateView, ProductDetailView, ProductListView, ProductUpdateView
-from .views import PriceCreateView, PriceUpdateView
+from .views import PriceCreateView, PriceUpdateView, get_price_for_product
 
 urlpatterns = [
     path('vendor/list', VendorListview.as_view(),name='catalogue-vendor-list'),
@@ -19,5 +19,6 @@ urlpatterns = [
     path('product/detail/<int:pk>', ProductDetailView.as_view(), name='catalogue-product-detail'),
     path('product/update/<int:pk>', ProductUpdateView.as_view(), name='catalogue-product-update'),
     path('price/create/<int:product_id>',PriceCreateView.as_view(), name='catalogue-price-create'),
-    path('price/update/<int:pk>/<int:product_id>', PriceUpdateView.as_view(), name='catalogue-price-update')
+    path('price/update/<int:pk>/<int:product_id>', PriceUpdateView.as_view(), name='catalogue-price-update'),
+    path('price/get/<int:product_id>', get_price_for_product)
 ]
