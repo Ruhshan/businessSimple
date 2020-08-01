@@ -6,10 +6,6 @@ from operation.widgets import VueSelect
 
 class ReceiveForm(ModelForm):
 
-    def clean_price(self):
-        data = self.cleaned_data['price']
-        return data
-
     def clean_date(self):
         today = datetime.datetime.today().date()
         form_date = self.cleaned_data['date']
