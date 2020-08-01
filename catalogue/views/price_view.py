@@ -24,6 +24,13 @@ class PriceCreateView(LoginRequiredMixin, CreateView):
 class PriceUpdateView(LoginRequiredMixin, UpdateView):
     model = Price
     form_class = PriceForm
+    template_name_suffix = "_update_form"
+
+    def get_context_data(self, **kwargs):
+        context = super(PriceUpdateView,self).get_context_data(**kwargs)
+        product_name = Product.objects.get(id=self.kwargs['product_id']).name
+        context['product_name'] = product_name
+        return context
 
     def get_success_url(self):
         return reverse_lazy('catalogue-product-detail',args=(self.kwargs['product_id'],))
