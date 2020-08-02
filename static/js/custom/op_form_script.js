@@ -1,5 +1,5 @@
 var receiveFormApp = new Vue({
-    el: '#receiveFormApp',
+    el: '#operationFormApp',
     created: function () {
         let preselectedProductId = $("#hidden_product_id").val()
         if (preselectedProductId) {
@@ -9,14 +9,14 @@ var receiveFormApp = new Vue({
     data: {
         product: '',
         price: '',
-        prices: []
+        options: []
     },
     watch: {
         product: function (newVal, oldVal) {
             if (newVal) {
                 this.update_prices(newVal)
             } else {
-                this.prices = []
+                this.options = []
             }
         }
     },
@@ -24,10 +24,10 @@ var receiveFormApp = new Vue({
         update_prices: function (product_id) {
             var self = this
             $.ajax({
-                url: '/catalogue/price/get/' + product_id,
+                url: '/catalogue/price/get/'+$("#form_model").val()+'/' + product_id,
                 method: 'GET',
                 success: function (data) {
-                    self.prices = data
+                    self.options = data
                 },
                 error: function (error) {
                     console.log(error);

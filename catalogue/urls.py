@@ -20,5 +20,5 @@ urlpatterns = [
     path('product/update/<int:pk>', ProductUpdateView.as_view(), name='catalogue-product-update'),
     path('price/create/<int:product_id>',PriceCreateView.as_view(), name='catalogue-price-create'),
     path('price/update/<int:pk>/<int:product_id>', PriceUpdateView.as_view(), name='catalogue-price-update'),
-    path('price/get/<int:product_id>', get_price_for_product)
+    path('price/get/<str:model_name>/<int:product_id>/', get_price_for_product)
 ]

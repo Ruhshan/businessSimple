@@ -38,8 +38,11 @@ class PriceUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('catalogue-product-detail',args=(self.kwargs['product_id'],))
 
-def get_price_for_product(request,product_id):
+def get_price_for_product(request,model_name,product_id):
+    target = "buying"
+    if model_name == "issue":
+        target = "selling"
     prices = Price.objects.filter(product_id=product_id, isActive=True)\
-        .values("id","buying","selling")
+        .values("id",value=F(target))
 
     return JsonResponse(list(prices),safe=False)

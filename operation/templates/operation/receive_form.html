@@ -6,7 +6,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Receive Product</h1>
 </div>
-    <div style="margin-bottom: 20px" id="receiveFormApp">
+    <div style="margin-bottom: 20px" id="operationFormApp"/>
+    <input type="hidden" id="form_model" value="receive"/>
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -39,7 +40,7 @@
             });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
-    <script type="text/javascript" src="{% static 'js/custom/receive_form_script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom/op_form_script.js' %}"></script>
 
 {% endblock page_scripts %}
 

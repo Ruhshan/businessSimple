@@ -1,7 +1,9 @@
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, Select
 from operation.models import Issue, DailySummary
 import datetime
 from django.utils.translation import ugettext_lazy as _
+
+from operation.widgets import VueSelect
 
 
 class IssueForm(ModelForm):
@@ -41,4 +43,8 @@ class IssueForm(ModelForm):
 
     class Meta:
         model = Issue
-        fields = ['product', 'date', 'unit', 'receipt_no', 'customer']
+        fields = ['product', 'price', 'date', 'unit','receipt_no', 'customer']
+        widgets = {
+            'product': Select(attrs={'v-model': 'product'}),
+            'price': VueSelect()
+        }
