@@ -1,6 +1,8 @@
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, Select
 from operation.models import Return
 import datetime
+
+from operation.widgets import VueSelect
 
 
 class ReturnForm(ModelForm):
@@ -13,4 +15,8 @@ class ReturnForm(ModelForm):
 
     class Meta:
         model = Return
-        fields = ['product', 'unit', 'date', 'receipt_no', 'customer', 'remarks']
+        fields = ['product', 'unit', 'price','date', 'receipt_no', 'customer', 'remarks']
+        widgets = {
+            'product': Select(attrs={'v-model': 'product'}),
+            'price': VueSelect()
+        }

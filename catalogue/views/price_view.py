@@ -40,7 +40,7 @@ class PriceUpdateView(LoginRequiredMixin, UpdateView):
 
 def get_price_for_product(request,model_name,product_id):
     target = "buying"
-    if model_name == "issue":
+    if model_name in ["issue", "return"]:
         target = "selling"
     prices = Price.objects.filter(product_id=product_id, isActive=True)\
         .values("id",value=F(target))
