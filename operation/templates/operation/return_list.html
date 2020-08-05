@@ -35,6 +35,12 @@
                 <th>
                     Number of units
                 </th>
+                <th>
+                    Returning price
+                </th>
+                <th>
+                    Cost
+                </th>
             </thead>
             <tbody>
                 {% for obj in object_list %}
@@ -43,6 +49,8 @@
                    <td>{{ obj.product }}</td>
                    <td>{{ obj.date }}</td>
                    <td>{{ obj.unit }}</td>
+                   <td>{{ obj.price.selling }}</td>
+                   <td>{{ obj.get_cost }}</td>
                    </tr>
                 {% endfor %}
 

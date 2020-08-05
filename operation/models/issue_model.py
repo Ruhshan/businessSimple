@@ -18,6 +18,9 @@ class Issue(CodedBase):
     def get_absolute_url(self):
         return reverse('operation-issue-detail', args=[self.pk])
 
+    def get_cost(self):
+        return self.unit * self.price.selling
+
     class Meta:
         app_label = 'operation'
         ordering = ['code']

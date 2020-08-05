@@ -17,6 +17,10 @@ class Receive(CodedBase):
     def get_absolute_url(self):
         return reverse('operation-receive-detail', args=[self.pk])
 
+    @property
+    def get_cost(self):
+        return self.price.buying * self.unit
+
     class Meta:
         app_label = 'operation'
         ordering = ['code']

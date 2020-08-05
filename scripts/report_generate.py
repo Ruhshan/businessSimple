@@ -1,17 +1,17 @@
 from catalogue.models import Product
 from operation.models import Receive, Issue, Return
-from django.db.models import Sum, Subquery, OuterRef
+from django.db.models import Sum, Subquery, OuterRef,F
 from itertools import chain
 
 def run():
 
     receives_q = Receive.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_receive=Sum('unit')).values('total_receive')
+        total_receive=Sum(F('unit')*F('price__buying'))).values('total_receive')
     issues_q = Issue.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_issues=Sum('unit')).values('total_issues')
+        total_issues=Sum(F('unit')*F('price__selling'))).values('total_issues')
 
     returns_q = Return.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_returns=Sum('unit')).values('total_returns')
+        total_returns=Sum(F('unit')*F('price__selling'))).values('total_returns')
 
     prc = Product.objects.all().annotate(total_receives=Subquery(receives_q),
                                          total_issues=Subquery(issues_q),

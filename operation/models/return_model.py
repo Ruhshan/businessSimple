@@ -19,6 +19,10 @@ class Return(CodedBase):
     def get_absolute_url(self):
         return reverse('operation-return-detail', args=[self.pk])
 
+    @property
+    def get_cost(self):
+        return self.unit*self.price.selling
+
     class Meta:
         app_label = 'operation'
         ordering = ['code']
