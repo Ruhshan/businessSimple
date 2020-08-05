@@ -32,12 +32,20 @@
     <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
 
     <script type="text/javascript">
+            {% if form.date.value %}
             $(function () {
                 $('#datetimepicker1').datetimepicker({
-                    format: 'L',
-                    defaultDate: '{{ form.date.value }}'
+                    format: 'YYYY-MM-DD',
+                    defaultDate: '{{ form.date.value|date:"Y-m-d" }}'
                 });
             });
+        {% else %}
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            });
+        {% endif %}
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
