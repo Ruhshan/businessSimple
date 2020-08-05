@@ -6,27 +6,21 @@ from crispy_forms import bootstrap, layout
 from crispy_forms.layout import Layout, Submit, Row, Column
 from report.widgets import BootstrapDateTimePickerInput
 
-
-
-class StockReportForm(forms.Form):
-    product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
-    date = forms.DateTimeField(
-        widget=BootstrapDateTimePickerInput(),
-        required=True
-    )
+class BalanceReportForm(forms.Form):
+    startDate = forms.DateTimeField(widget=BootstrapDateTimePickerInput(), required=True)
+    endDate = forms.DateTimeField(widget=BootstrapDateTimePickerInput(), required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
-
         self.helper.layout = Layout(
             Row(
-                Column('product', css_class='form-group col-md-4 mb-0'),
-                Column('date', css_class='form-group col-md-4 mb-0'),
+                Column('startDate', css_class='form-group col-md-4 mb-0'),
+                Column('endDate', css_class='form-group col-md-4 mb-0'),
                 Column(
                     bootstrap.FormActions(
-                        layout.Submit('submit', 'Search', css_class='btn btn-primary')),
+                        layout.Submit('submit', 'Generate', css_class='btn btn-primary')),
                     css_class='search-button'
                 ),
                 css_class='form-row',

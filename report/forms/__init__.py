@@ -1,1 +1,2 @@
 from .stock_report_form import StockReportForm
+from .balance_report_form import BalanceReportForm

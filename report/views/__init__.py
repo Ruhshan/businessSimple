@@ -1,1 +1,2 @@
 from .stock_report_view import StockReportView
+from .balance_report_view import BalanceReportView

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="">
+         {% crispy form %}
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" style="background-color: white">
+            <thead>
+                <tr>
+                    <th rowspan="2">Product</th>
+                    <th colspan="2">Received</th>
+                    <th colspan="2">Issued</th>
+                </tr>
+                <tr>
+                    <th>Units</th>
+                    <th>Cost</th>
+                    <th>Units</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for balance in balances %}
+                    <tr>
+                    <td>
+                        {{ balance.name }}
+                    </td>
+                    <td>
+                        {{ balance.total_receive_units }}
+                    </td>
+                    <td>
+                        {{ balance.total_receive_value }}
+                    </td>
+                    <td>
+                        {{ balance.total_issue_units }}
+                    </td>
+                    <td>{{ balance.total_issue_value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock content %}
+
+{% block page_scripts %}
+    <script type="text/javascript" src="{% static 'vendor/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            {% if form.startDate.value %}
+                $('#datetimepicker_startDate').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    defaultDate: '{{ form.startDate.value|date:"Y-m-d" }}'
+                });
+            {% else %}
+                $('#datetimepicker_startDate').datetimepicker({format: 'YYYY-MM-DD'});
+            {% endif %}
+
+            {% if form.endDate.value %}
+                $('#datetimepicker_endDate').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    defaultDate: '{{ form.endDate.value|date:"Y-m-d" }}'
+                });
+            {% else %}
+                $('#datetimepicker_endDate').datetimepicker({format: 'YYYY-MM-DD'});
+            {% endif %}
+        });
+    </script>
+
+{% endblock page_scripts %}
+
+{% block page_head %}
+    <link rel="stylesheet" href="{% static 'vendor/tempusdominus/tempusdominus-bootstrap-4.min.css' %}" />
+    <style>
+        .search-button{
+            padding-top: 30px;
+        }
+    </style>
+{% endblock page_head %}

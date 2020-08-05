@@ -5,21 +5,30 @@ from itertools import chain
 
 def run():
 
-    receives_q = Receive.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_receive=Sum(F('unit')*F('price__buying'))).values('total_receive')
-    issues_q = Issue.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_issues=Sum(F('unit')*F('price__selling'))).values('total_issues')
+    receive_value = Receive.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_receive_value=Sum(F('unit')*F('price__buying'))).values('total_receive_value')
+    receive_units = Receive.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_receive_units=Sum('unit')).values('total_receive_units')
 
-    returns_q = Return.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
-        total_returns=Sum(F('unit')*F('price__selling'))).values('total_returns')
+    issue_value= Issue.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_issue_value=Sum(F('unit')*F('price__selling'))).values('total_issue_value')
+    issue_units = Issue.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_issue_units=Sum('unit')).values('total_issue_units')
 
-    prc = Product.objects.all().annotate(total_receives=Subquery(receives_q),
-                                         total_issues=Subquery(issues_q),
-                                         total_returns=Subquery(returns_q))
+    return_value = Return.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_return_value=Sum(F('unit')*F('price__selling'))).values('total_return_value')
+    return_units = Return.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        total_return_units=Sum('unit')).values('total_return_units')
+
+    Product.objects.all().annotate(total_receive_value=Subquery(receive_value),
+                                         total_receive_units=Subquery(receive_units),
+                                         total_issue_value=Subquery(issue_value),
+                                         total_issue_units=Subquery(issue_units),
+                                         total_return_value=Subquery(return_value),
+                                         total_return_units=Subquery(return_units))
 
 
-    for p in prc:
-        print(p.name, p.total_receives, p.total_issues,p.total_returns)
+
 
 
 
