@@ -12,19 +12,24 @@
         <table class="table table-hover table-striped table-bordered" style="background-color: white">
             <thead>
                 <tr>
-                    <th rowspan="2">Product</th>
-                    <th colspan="2">Received</th>
-                    <th colspan="2">Issued</th>
+                    <td rowspan="2" style="text-align:center; "><strong>Product</strong></td>
+                    <th colspan="2" style="text-align:center; ">Received</th>
+                    <th colspan="2" style="text-align:center; ">Issued</th>
+                    <th colspan="2" style="text-align:center; ">Returned</th>
                 </tr>
                 <tr>
                     <th>Units</th>
                     <th>Cost</th>
                     <th>Units</th>
                     <th>Cost</th>
+                    <th>Units</th>
+                    <th>Cost</th>
+
                 </tr>
             </thead>
             <tbody>
                 {% for balance in balances %}
+                    {% if balance.total_receive_units %}
                     <tr>
                     <td>
                         {{ balance.name }}
@@ -39,7 +44,12 @@
                         {{ balance.total_issue_units }}
                     </td>
                     <td>{{ balance.total_issue_value }}</td>
+                    <td>
+                        {{ balance.total_return_units }}
+                    </td>
+                    <td>{{ balance.total_return_value }}</td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>

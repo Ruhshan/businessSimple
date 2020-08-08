@@ -3,14 +3,26 @@ from django.views.generic import View
 from report.forms import BalanceReportForm
 from django.shortcuts import render
 from catalogue.models import Product
+from datetime import date
 
 
 class BalanceReportView(LoginRequiredMixin,View):
     def get(self,request):
-        form = BalanceReportForm()
-        return render(request,'report/balance_report.html',{'form':form})
+        today, fistOfMonth = self._getDefaultDateRange()
+
+        print(today, fistOfMonth)
+        form = BalanceReportForm(initial={'startDate':str(fistOfMonth),'endDate':str(today)})
+        balances = Product.objects.get_balance_report(fistOfMonth, today)
+        return render(request,'report/balance_report.html',{'form':form,'balances':balances})
 
     def post(self, request):
         form = BalanceReportForm(request.POST)
-        balances = Product.objects.get_balance_report()
-        return render(request, 'report/balance_report.html', {'form': form,'balances':balances})
+        if form.is_valid():
+            balances = Product.objects.get_balance_report(form.cleaned_data['startDate'], form.cleaned_data['endDate'])
+            return render(request, 'report/balance_report.html', {'form': form,'balances':balances})
+        return render(request, 'report/balance_report.html', {'form': form})
+
+    def _getDefaultDateRange(self):
+        today = date.today()
+        firstOfMonth = today.replace(day=1)
+        return (today, firstOfMonth)

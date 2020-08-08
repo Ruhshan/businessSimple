@@ -10,24 +10,24 @@ from .category_model import Category
 from .vendor_model import Vendor
 
 class ProductManager(models.Manager):
-    def get_balance_report(self):
+    def get_balance_report(self,startDate, endDate):
         receive_model = apps.get_model('operation.receive')
         issue_model = apps.get_model('operation.issue')
         return_model = apps.get_model('operation.return')
 
-        receive_value = receive_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        receive_value = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_receive_value=Sum(F('unit') * F('price__buying'))).values('total_receive_value')
-        receive_units = receive_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        receive_units = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_receive_units=Sum('unit')).values('total_receive_units')
 
-        issue_value = issue_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        issue_value = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_issue_value=Sum(F('unit') * F('price__selling'))).values('total_issue_value')
-        issue_units = issue_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        issue_units = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_issue_units=Sum('unit')).values('total_issue_units')
 
-        return_value = return_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        return_value = return_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_return_value=Sum(F('unit') * F('price__selling'))).values('total_return_value')
-        return_units = return_model.objects.filter(product=OuterRef('pk')).order_by().values('product').annotate(
+        return_units = return_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_return_units=Sum('unit')).values('total_return_units')
 
         return self.all().annotate(total_receive_value=Subquery(receive_value),
