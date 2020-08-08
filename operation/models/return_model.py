@@ -10,7 +10,7 @@ class Return(CodedBase):
     _prefix = "RET"
     product = models.ForeignKey(Product, related_name="+", on_delete=models.DO_NOTHING)
     unit = models.PositiveIntegerField(verbose_name=_("Units"))
-    price = models.ForeignKey(Price, on_delete=models.CASCADE,null=True,blank=True)
+    price = models.ForeignKey(Price, on_delete=models.CASCADE)
     date = models.DateField(verbose_name=_("Return Date"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
     customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
