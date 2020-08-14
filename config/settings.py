@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import logging
+import logging.config
+
 import dj_database_url
 from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -152,3 +155,70 @@ LOGIN_URL = '/login'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+LOGGER = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(levelname)s | %(asctime)s | %(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        },
+        'request_response_formatter': {
+            'format': '%(levelname)s | %(asctime)s | %(username)s | %(method)s | %(path)s | %(params)s |%(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    'handlers': {
+        'info_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'formatter': 'default',
+            'filename': BASE_DIR + "/logs/info.log",
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 5
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default'
+        },
+        'request_response_console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'request_response_formatter'
+        },
+        'exception_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'formatter': 'default',
+            'filename': BASE_DIR + "/logs/error.log",
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 5
+        },
+
+    },
+    'loggers': {
+        'info': {
+            'handlers': ['info_file', 'console'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        'request_response': {
+            'handlers': ['request_response_console'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        'exception': {
+            'handlers': ['exception_file'],
+            'level': 'ERROR',
+            'propagate': True
+        }
+    }
+}
+logging.config.dictConfig(LOGGER)
+
+
+
