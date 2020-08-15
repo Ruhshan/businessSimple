@@ -23,9 +23,8 @@ class ReceiveCreateView(LoginRequiredMixin, CreateView):
     form_class = ReceiveForm
 
     def form_valid(self, form):
-        raise ObjectDoesNotExist('nai nai')
-        # form.instance.created_by = self.request.user
-        # return super().form_valid(form)
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class ReceiveDetailView(LoginRequiredMixin, DetailView):

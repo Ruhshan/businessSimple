@@ -65,10 +65,11 @@ class Loggable:
                     'username': request.user.username,
                     'status_code': response.status_code,
                 }
-                if response.status_code == 200:
-                    resMessage['template']: response.template_name
-                    resMessage['errors']: response.context_data.get('form').errors
-                if response.status_code == 302:
+                if hasattr(response,'template_name'):
+                    resMessage['template'] = response.template_name
+                if hasattr(response.context_data,'form'):
+                    resMessage['errors'] = response.context_data.get('form').errors
+                if hasattr(response,'url'):
                     resMessage['url'] = response.url
                 self.logger.info({'response': resMessage})
                 return response
