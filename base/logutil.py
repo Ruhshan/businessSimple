@@ -21,7 +21,7 @@ class Loggable:
             'disable_existing_loggers': False,
             'formatters': {
                 'request_response_formatter': {
-                    'format': '%(levelname)s | %(asctime)s | %(message)s',
+                    'format': '%(levelname)s | %(asctime)s.%(msecs)03d | %(message)s',
                     'datefmt': "%Y-%m-%d %H:%M:%S",
                 }
             },

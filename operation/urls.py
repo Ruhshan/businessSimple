@@ -8,7 +8,7 @@ from operation.views import DailySummaryListView
 
 
 urlpatterns = [
-    path('receive/list', ReceiveListView.as_view(), name='operation-receive-list'),
+    path('receive/list', Loggable(ReceiveListView,True).as_view(), name='operation-receive-list'),
     path('receive/create', Loggable(ReceiveCreateView,True).as_view(), name='operation-receive-create'),
     path('receive/detail/<int:pk>', Loggable(ReceiveDetailView,True).as_view(), name='operation-receive-detail'),
     path('receive/update/<int:pk>', ReceiveUpdateView.as_view(), name='operation-receive-update'),
