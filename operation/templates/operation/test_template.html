@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test template</title>
+</head>
+<body>
+
+<form action="/operation/test" method="post">
+    {% csrf_token %}
+    <input name="test" type="text"/>
+    <input name="test2" type="text"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>
