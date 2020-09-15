@@ -5,8 +5,7 @@ from operation.views import ReturnCreateView, ReturnDetailView, ReturnListView, 
 from operation.views import DailySummaryListView
 from operation.views import ReceiveDeleteView
 
-from logutil.loggable import Loggable
-
+from django_loggable_util import Loggable
 urlpatterns = [
     path('receive/list', Loggable(ReceiveListView).as_view(), name='operation-receive-list'),
     path('receive/create', Loggable(ReceiveCreateView).as_view(), name='operation-receive-create'),

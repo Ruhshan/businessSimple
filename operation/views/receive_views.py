@@ -17,9 +17,6 @@ class ReceiveListView(LoginRequiredMixin,
     sort_fields = ['date', 'product__name']
     paginate_by = 10
 
-class Myexeption(Exception):
-    pass
-
 class ReceiveCreateView(LoginRequiredMixin, CreateView):
     model = Receive
     form_class = ReceiveForm
