@@ -27,7 +27,9 @@ var receiveFormApp = new Vue({
                 url: '/catalogue/price/get/'+$("#form_model").val()+'/' + product_id,
                 method: 'GET',
                 success: function (data) {
-                    self.options = data
+                    self.options = data.prices
+                    $("#div_id_unitPerPackage")[0].firstChild.innerText = data.unit_name + "s Per Carton"
+                    $("#div_id_price")[0].firstChild.innerText = "Price* (Per "+data.unit_name +" )"
                 },
                 error: function (error) {
                     console.log(error);

@@ -12,7 +12,11 @@
         {% csrf_token %}
         {% for field in form %}
             {% if field.name != 'date' %}
-                {{ field|as_crispy_field }}
+                {% if field.name != 'unit' %}
+                    {{ field|as_crispy_field }}
+                {% else %}
+                    <input type="hidden" name="unit" min="0" required id="id_unit" value="0">
+                {% endif %}
             {% else %}
                 {% include 'operation/dateTimePickerField.html' %}
             {% endif %}

@@ -21,6 +21,7 @@ class ReceiveCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        form.instance.unit = int(form.instance.unitPerPackage) * int(form.instance.receivedPackage)
         return super().form_valid(form)
 
 

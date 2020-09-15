@@ -9,7 +9,9 @@ from catalogue.models import Product, Price
 class Receive(CodedBase):
     _prefix = "RECV"
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    unit = models.PositiveIntegerField(verbose_name=_("Units"))
+    unitPerPackage = models.PositiveIntegerField(null=True, blank=True,verbose_name=_("Units Per Carton"))
+    receivedPackage = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("Cartons received"))
+    unit = models.PositiveIntegerField(verbose_name=_("Units"), default=0)
     date = models.DateField(verbose_name=_("Receive Date"))
     price = models.ForeignKey(Price, on_delete=models.CASCADE)
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))

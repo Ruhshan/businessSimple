@@ -44,5 +44,9 @@ def get_price_for_product(request,model_name,product_id):
         target = "selling"
     prices = Price.objects.filter(product_id=product_id, isActive=True)\
         .values("id",value=F(target))
+    res = {
+        'prices': list(prices),
+        'unit_name': Product.objects.get(id=product_id).unitName.name
+    }
 
-    return JsonResponse(list(prices),safe=False)
+    return JsonResponse(res, safe=False)
