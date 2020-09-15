@@ -28,8 +28,15 @@ var receiveFormApp = new Vue({
                 method: 'GET',
                 success: function (data) {
                     self.options = data.prices
-                    $("#div_id_unitPerPackage")[0].firstChild.innerText = data.unit_name + "s Per Carton"
                     $("#div_id_price")[0].firstChild.innerText = "Price* (Per "+data.unit_name +" )"
+                    if($("#div_id_unitPerPackage").length !== 0){
+                        $("#div_id_unitPerPackage")[0].firstChild.innerText = data.unit_name + "s Per Carton"
+                    }
+                    if($("#div_id_unit").length !== 0){
+                        $("#div_id_unit")[0].firstChild.innerText = data.unit_name + "s*"
+                    }
+
+
                 },
                 error: function (error) {
                     console.log(error);

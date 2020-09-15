@@ -24,11 +24,11 @@
             </tr>
             <tr>
                 <th>Units</th>
-                <td>{{ object.unit }}</td>
+                <td>{{ object.unit }} {{ object.product.unitName.name }}s</td>
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ object.price.selling }}</td>
+                <td>{{ object.price.selling }} Taka/{{ object.product.unitName.name }}</td>
             </tr>
             <tr>
                 <th>Issue Date</th>
