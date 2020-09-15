@@ -25,7 +25,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['name', 'category', 'vendor', 'remarks']
+    fields = ['name', 'unitName', 'category', 'vendor', 'remarks']
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -34,5 +34,5 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    fields = ['name', 'category', 'vendor', 'remarks']
+    fields = ['name', 'unitName', 'category', 'vendor', 'remarks']
     template_name_suffix = '_update_form'

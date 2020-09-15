@@ -28,6 +28,9 @@
                     <a href="{{ sort_helper.get_sort_query_by_name_desc }}"><i class="fa fa-caret-down"></i></a>
                 </th>
                 <th>
+                    Unit Name
+                </th>
+                <th>
                     Added By
                 </th>
             </thead>
@@ -36,7 +39,7 @@
                    <tr>
                     <td><a href="{% url 'catalogue-product-detail' obj.pk %}">{{ obj.code }}</a></td>
                    <td>{{ obj.name }}</td>
-
+                    <td>{{ obj.unitName.name }}</td>
                    <td>{{ obj.created_by }}</td>
                    </tr>
                 {% endfor %}

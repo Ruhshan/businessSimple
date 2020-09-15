@@ -16,6 +16,10 @@
                 <td>{{ object.name }}</td>
             </tr>
             <tr>
+                <th>Unit Name</th>
+                <td>{{ object.unitName.name }}</td>
+            </tr>
+            <tr>
                 <th>Category</th>
                 <td>{{ object.category.name }}</td>
             </tr>
@@ -64,10 +68,10 @@
                     Valid Through
                 </th>
                 <th>
-                    Buying
+                    Buying(DP)
                 </th>
                 <th>
-                    Selling
+                    Selling(TP)
                 </th>
                 <th>
                     Is active
@@ -82,8 +86,8 @@
                         <td>{{ price.code }}</td>
                         <td>{{ price.validFrom }}</td>
                         <td>{{ price.validThrough }}</td>
-                        <td>{{ price.buying }} Tk.</td>
-                        <td>{{ price.selling }} Tk.</td>
+                        <td>{{ price.buying }} Tk./{{ object.unitName.name }}</td>
+                        <td>{{ price.selling }} Tk./{{ object.unitName.name }}</td>
                         <td>{{ price.isActive }}</td>
                         <td>
                             <a href="{% url 'catalogue-price-update' price.pk object.id %}" class="btn btn-primary">Update</a>

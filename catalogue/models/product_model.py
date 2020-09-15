@@ -8,6 +8,8 @@ from django.apps import apps
 
 from .category_model import Category
 from .vendor_model import Vendor
+from .unit_name_model import UnitName
+
 
 class ProductManager(models.Manager):
     def get_balance_report(self,startDate, endDate):
@@ -43,6 +45,7 @@ class Product(CodedBase):
     category = models.ForeignKey(Category, related_name="+", blank=True, null=True, on_delete=models.SET_NULL)
     vendor = models.ForeignKey(Vendor, related_name="+", blank=True, null=True, on_delete=models.SET_NULL)
     remarks = models.TextField(verbose_name=_("Remarks"), blank=True, null=True)
+    unitName = models.ForeignKey(UnitName, blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("Unit Name"))
     objects = ProductManager()
 
     def get_absolute_url(self):
