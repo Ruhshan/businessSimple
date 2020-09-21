@@ -204,6 +204,31 @@ class ReceiveTests(TestCase):
             if l.product == self.product:
                 self.assertEqual(l.stockEnd, 55)
 
+    def test_receive_10(self):
+        """
+            Precondtion: Execute 6, 7
+            Do: Receive product A4 80 GSM on 17th september 2020, with unitPerPackage:5, receivedPackage:3, bonusUnits: 10
+            Validate:  In stock A4 80 GSM will be 75 on 21st September
+        :return:
+        """
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=5, unit=25, bonusUnits=5)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-15", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=10)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-17", unitPerPackage=5,
+                               receivedPackage=3, unit=15, bonusUnits=10)
+
+        date = datetime.strptime("2020-09-21", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 75)
+
+
 
 
 
