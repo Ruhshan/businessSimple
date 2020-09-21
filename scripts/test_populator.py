@@ -8,13 +8,13 @@ def run():
     DailySummary.objects.all().delete()
     Receive.objects.all().delete()
 
-    Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-21", unitPerPackage=5,
-                           receivedPackage=5, unit=25)
-
-    Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-14", unitPerPackage=5,
-                           receivedPackage=2, unit=10)
-
-    Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-20", unitPerPackage=5,
-                           receivedPackage=5, unit=25)
+    # Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-21", unitPerPackage=5,
+    #                        receivedPackage=5, unit=25)
+    #
+    # Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-14", unitPerPackage=5,
+    #                        receivedPackage=2, unit=10)
+    #
+    # Receive.objects.create(product=a480gsm, price=a480gsm_price, date="2020-09-20", unitPerPackage=5,
+    #                        receivedPackage=5, unit=25)
 
 
