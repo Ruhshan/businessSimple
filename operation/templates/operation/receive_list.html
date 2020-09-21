@@ -36,6 +36,9 @@
                     <a href="{{ sort_helper.get_sort_query_by_date_desc }}"><i class="fa fa-caret-down"></i></a>
                 </th>
                 <th>
+                    Bonus units
+                </th>
+                <th>
                     Number of units
                 </th>
                 <th>
@@ -49,10 +52,11 @@
                 {% for obj in object_list %}
                    <tr>
                     <td><a href="{% url 'operation-receive-detail' obj.id %}">{{ obj.code }}</a></td>
-                   <td>{{ obj.product }}</td>
+                   <td>{{ obj.product.name }}</td>
 
                    <td>{{ obj.created_by }}</td>
                    <td>{{ obj.date }}</td>
+                   <td>{{ obj.bonusUnits }}</td>
                    <td>{{ obj.unit }}</td>
                    <td>{{ obj.price.buying }}</td>
                    <td>
