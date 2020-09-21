@@ -69,6 +69,63 @@ class ReceiveTests(TestCase):
                 self.assertEqual(l.stockEnd, 60)
 
 
+    def test_receive_4(self):
+        """
+            Precondition : Execute 1 2 3
+            Do: Update receive product for A4 80 GSM on 20 th september with rims per carton 5, and carton received: 2 , bonus units: 0
+            Validate: In stock A4 80 GSM will be 45 on 21st Septermber.
+        """
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=5, unit=25)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-14", unitPerPackage=5,
+                               receivedPackage=2, unit=10)
+
+        rcv = Receive.objects.create(product=self.product, price=self.price, date="2020-09-20", unitPerPackage=5,
+                               receivedPackage=5, unit=25)
+
+        rcv.receivedPackage = 2
+        rcv.unit = 10
+
+        rcv.save()
+
+        date = datetime.strptime("2020-09-21", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 45)
+
+    def test_receive_5(self):
+        """
+            Precondition: Execute 1 2 3
+            Do: Receive production A4 80 GSM on 2oth September with rimps per carton 5, carton received:1, bonus units:0
+            Validate:  In stock A4 80 GSM will be 65 on 21st Septermber.
+        """
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=5, unit=25)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-14", unitPerPackage=5,
+                               receivedPackage=2, unit=10)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-20", unitPerPackage=5,
+                               receivedPackage=5, unit=25)
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-20", unitPerPackage=5,
+                               receivedPackage=1, unit=5)
+        date = datetime.strptime("2020-09-21", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 65)
+
+
+
+
+
 
 
 

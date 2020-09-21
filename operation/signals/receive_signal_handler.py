@@ -75,7 +75,7 @@ def handle_instance_update(new_instance):
     daily_summary_old.bonusReceived -= old_instance.bonusUnits
     daily_summary_old.save()
 
-    update_stock_for_product_after_date(old_instance.product, old_instance.unit+old_instance.bonusUnits, old_instance.date)
+    update_stock_for_product_after_date(old_instance.product, -1*(old_instance.unit+old_instance.bonusUnits), old_instance.date)
 
     handle_instance_creation(new_instance)
 
