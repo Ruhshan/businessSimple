@@ -51,6 +51,8 @@ class DailySummary(CodedBase):
     totalReceived = models.IntegerField(default=0)
     totalIssued = models.IntegerField(default=0)
     totalReturned = models.IntegerField(default=0)
+    bonusReceived = models.IntegerField(default=0)
+    bonusIssued = models.IntegerField(default=0)
     date = models.DateField()
     objects = DailySummaryManager()
 

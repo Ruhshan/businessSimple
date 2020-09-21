@@ -11,6 +11,7 @@ class Receive(CodedBase):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
     unitPerPackage = models.PositiveIntegerField(null=True, blank=True,verbose_name=_("Units Per Carton"))
     receivedPackage = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("Cartons received"))
+    bonusUnits = models.PositiveIntegerField(default=0, verbose_name=_("Received Bonus units"))
     unit = models.PositiveIntegerField(verbose_name=_("Units"), default=0)
     date = models.DateField(verbose_name=_("Receive Date"))
     price = models.ForeignKey(Price, on_delete=models.CASCADE)

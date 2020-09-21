@@ -18,19 +18,21 @@ def handle_instance_creation(instance):
     else:
         insert_top(instance)
 
-    update_stock_for_product_after_date(instance.product, instance.unit, instance.date)
+    update_stock_for_product_after_date(instance.product, instance.unit + instance.bonusUnits, instance.date)
 
 
 def insert_top(instance):
     obj, created = summary_get_or_create(instance.product, instance.date)
     if created:
         obj.stockStart = 0
-        obj.stockEnd = instance.unit
+        obj.stockEnd = instance.unit + instance.bonusUnits
         obj.totalReceived = instance.unit
+        obj.bonusReceived = instance.bonusUnits
         obj.save()
     else:
-        obj.stockEnd = obj.stockEnd + instance.unit
+        obj.stockEnd = obj.stockEnd + instance.unit + instance.bonusUnits
         obj.totalReceived = obj.totalReceived + instance.unit
+        obj.bonusReceived = obj.bonusReceived + instance.bonusUnits
         obj.save()
 
 
@@ -39,12 +41,14 @@ def insert_within(instance):
     obj, created = summary_get_or_create(instance.product, instance.date)
     if created:
         obj.stockStart = last_summary.stockEnd
-        obj.stockEnd = last_summary.stockEnd + instance.unit
+        obj.stockEnd = last_summary.stockEnd + instance.unit + instance.bonusUnits
         obj.totalReceived = instance.unit
+        obj.bonusReceived = instance.bonusUnits
         obj.save()
     else:
-        obj.stockEnd = obj.stockEnd + instance.unit
+        obj.stockEnd = obj.stockEnd + instance.unit + instance.bonusUnits
         obj.totalReceived = obj.totalReceived + instance.unit
+        obj.bonusReceived = obj.bonusReceived + instance.bonusUnits
         obj.save()
 
 
@@ -68,9 +72,10 @@ def handle_instance_update(new_instance):
     daily_summary_old = DailySummary.objects.get(product=old_instance.product, date=old_instance.date)
     daily_summary_old.stockEnd -= old_instance.unit
     daily_summary_old.totalReceived -= old_instance.unit
+    daily_summary_old.bonusReceived -= old_instance.bonusUnits
     daily_summary_old.save()
 
-    update_stock_for_product_after_date(old_instance.product, old_instance.unit, old_instance.date)
+    update_stock_for_product_after_date(old_instance.product, old_instance.unit+old_instance.bonusUnits, old_instance.date)
 
     handle_instance_creation(new_instance)
 

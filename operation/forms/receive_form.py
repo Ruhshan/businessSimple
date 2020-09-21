@@ -15,7 +15,7 @@ class ReceiveForm(ModelForm):
 
     class Meta:
         model = Receive
-        fields = ['product', 'price', 'unitPerPackage', 'receivedPackage', 'unit', 'date', 'receipt_no']
+        fields = ['product', 'price', 'unitPerPackage', 'receivedPackage', 'unit','bonusUnits', 'date', 'receipt_no']
         widgets = {
             'product': Select(attrs={'v-model':'product'}),
             'price':VueSelect()
