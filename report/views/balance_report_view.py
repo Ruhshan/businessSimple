@@ -10,7 +10,6 @@ class BalanceReportView(LoginRequiredMixin,View):
     def get(self,request):
         today, fistOfMonth = self._getDefaultDateRange()
 
-        print(today, fistOfMonth)
         form = BalanceReportForm(initial={'startDate':str(fistOfMonth),'endDate':str(today)})
         balances = Product.objects.get_balance_report(fistOfMonth, today)
         return render(request,'report/balance_report.html',{'form':form,'balances':balances})

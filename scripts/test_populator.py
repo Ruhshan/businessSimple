@@ -17,7 +17,10 @@ def run():
     Receive.objects.create(product=product, price=price, date="2020-09-10", unitPerPackage=5,
                            receivedPackage=2, unit=10, bonusUnits=5)
 
-    iss = Issue.objects.create(product=product, price=price, date="2020-09-17", unit=10)
+    iss = Issue.objects.create(product=product, price=price, date="2020-09-11", unit=5, bonusUnits=2)
+
+    iss.bonusUnits = 0
+    iss.save()
 
 
 

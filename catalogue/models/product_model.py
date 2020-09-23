@@ -21,6 +21,8 @@ class ProductManager(models.Manager):
             total_receive_value=Sum(F('unit') * F('price__buying'))).values('total_receive_value')
         receive_units = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_receive_units=Sum('unit')).values('total_receive_units')
+        receive_bonus = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
+            total_receive_bonus=Sum(F('bonusUnits') )).values('total_receive_bonus')
 
         issue_value = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_issue_value=Sum(F('unit') * F('price__selling'))).values('total_issue_value')
@@ -35,6 +37,7 @@ class ProductManager(models.Manager):
         return self.all().annotate(total_receive_value=Subquery(receive_value),
                                        total_receive_units=Subquery(receive_units),
                                        total_issue_value=Subquery(issue_value),
+                                       total_receive_bonus=Subquery(receive_bonus),
                                        total_issue_units=Subquery(issue_units),
                                        total_return_value=Subquery(return_value),
                                        total_return_units=Subquery(return_units))
