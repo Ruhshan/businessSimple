@@ -17,7 +17,7 @@
                 <tr>
                     <td rowspan="2" style="text-align:center; "><strong>Product</strong></td>
                     <th colspan="3" style="text-align:center; ">Received</th>
-                    <th colspan="2" style="text-align:center; ">Issued</th>
+                    <th colspan="3" style="text-align:center; ">Issued</th>
                     <th colspan="2" style="text-align:center; ">Returned</th>
                 </tr>
                 <tr>
@@ -26,6 +26,7 @@
                     <th>Bonus</th>
                     <th>Units</th>
                     <th>Cost</th>
+                    <th>Bonus</th>
                     <th>Units</th>
                     <th>Cost</th>
 
@@ -51,6 +52,9 @@
                         {{ balance.total_issue_units }}
                     </td>
                     <td>{{ balance.total_issue_value }}</td>
+                    <td>
+                        {{ balance.total_issue_bonus }}
+                    </td>
                     <td>
                         {{ balance.total_return_units }}
                     </td>

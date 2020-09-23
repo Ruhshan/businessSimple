@@ -28,6 +28,9 @@ class ProductManager(models.Manager):
             total_issue_value=Sum(F('unit') * F('price__selling'))).values('total_issue_value')
         issue_units = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_issue_units=Sum('unit')).values('total_issue_units')
+        issue_bonus = issue_model.objects.filter(product=OuterRef('pk'),
+                                                 date__range=[startDate, endDate]).order_by().values('product').annotate(
+            total_issue_bonus=Sum('bonusUnits')).values('total_issue_bonus')
 
         return_value = return_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_return_value=Sum(F('unit') * F('price__selling'))).values('total_return_value')
@@ -40,6 +43,7 @@ class ProductManager(models.Manager):
                                        total_receive_bonus=Subquery(receive_bonus),
                                        total_issue_units=Subquery(issue_units),
                                        total_return_value=Subquery(return_value),
+                                       total_issue_bonus=Subquery(issue_bonus),
                                        total_return_units=Subquery(return_units))
 
 class Product(CodedBase):
