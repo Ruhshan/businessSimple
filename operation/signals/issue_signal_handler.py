@@ -17,15 +17,17 @@ def handle_instance_creation(instance):
     if created:
         last_summary = get_last_summary(instance)
         obj.stockStart = last_summary.stockEnd
-        obj.stockEnd = last_summary.stockEnd - instance.unit
+        obj.stockEnd = last_summary.stockEnd - (instance.unit + instance.bonusUnits)
         obj.totalIssued = instance.unit
+        obj.bonusIssued = instance.bonusUnits
         obj.save()
     else:
-        obj.stockEnd -= instance.unit
+        obj.stockEnd -= (instance.unit + instance.bonusUnits)
         obj.totalIssued += instance.unit
+        obj.bonusIssued += instance.bonusUnits
         obj.save()
 
-    update_stock_for_product_after_date(instance.product, instance.unit, instance.date)
+    update_stock_for_product_after_date(instance.product, instance.unit+instance.bonusUnits, instance.date)
 
 
 def get_last_summary(instance):
@@ -46,10 +48,10 @@ def summary_get_or_create(product, date):
 def handle_instance_update(new_instance):
     old_instance = Issue.objects.get(id=new_instance.id)
     daily_summary_old = DailySummary.objects.get(product=old_instance.product, date=old_instance.date)
-    daily_summary_old.stockEnd += old_instance.unit
-    daily_summary_old.totalIssued -= old_instance.unit
+    daily_summary_old.stockEnd += (old_instance.unit + old_instance.bonusUnits)
+    daily_summary_old.totalIssued -= (old_instance.unit + old_instance.bonusUnits)
     daily_summary_old.save()
 
-    update_stock_for_product_after_date(old_instance.product, -1 * old_instance.unit, old_instance.date)
+    update_stock_for_product_after_date(old_instance.product, -1 * (old_instance.unit + old_instance.bonusUnits), old_instance.date)
 
     handle_instance_creation(new_instance)

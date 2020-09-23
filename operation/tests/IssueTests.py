@@ -120,6 +120,52 @@ class IssueTests(TestCase):
             if l.product == self.product:
                 self.assertEqual(l.stockEnd, 38)
 
+    def test_06(self):
+        """
+        Do: Execute 5 then Update the issue with bonus units 10
+        Validate: In stock A4 80 GSM will be 30 on 22nd September 2020
+        """
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-15", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-10", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+
+        iss = Issue.objects.create(product=self.product, price=self.price, date="2020-09-17", unit=5, bonusUnits=2)
+
+        iss.bonusUnits = 10
+        iss.save()
+
+        date = datetime.strptime("2020-09-22", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 30)
+
+    def test_07(self):
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-15", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-10", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+
+        iss = Issue.objects.create(product=self.product, price=self.price, date="2020-09-11", unit=5, bonusUnits=2)
+
+        iss.bonusUnits = 0
+        iss.save()
+
+        date = datetime.strptime("2020-09-22", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 40)
+
+
 
 
 
