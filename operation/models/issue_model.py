@@ -12,6 +12,7 @@ class Issue(CodedBase):
     unit = models.PositiveIntegerField(verbose_name=_("Units"))
     price = models.ForeignKey(Price, on_delete=models.CASCADE)
     date = models.DateField(verbose_name=_("Issue Date"))
+    bonusUnits = models.PositiveIntegerField(default=0, verbose_name=_("Issued Bonus Units"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
     customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
     
