@@ -98,6 +98,32 @@ class IssueTests(TestCase):
             if l.product == self.product:
                 self.assertEqual(l.stockEnd, 40)
 
+    def test_05(self):
+        """
+        Do: Execute 1 and 2(Only Receive), Then create a issue on 2020-09-17, with unit 5 and bonus 2
+        Validate: In stock A4 80 GSM will be 38 on 22nd September 2020
+        """
+
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-21", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-15", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+        Receive.objects.create(product=self.product, price=self.price, date="2020-09-10", unitPerPackage=5,
+                               receivedPackage=2, unit=10, bonusUnits=5)
+
+        Issue.objects.create(product=self.product, price=self.price, date="2020-09-17", unit=5, bonusUnits=2)
+
+        date = datetime.strptime("2020-09-22", "%Y-%m-%d")
+
+        stock = DailySummary.objects.get_stock_for_date(date, product=None)
+        for l in stock.iterator():
+            if l.product == self.product:
+                self.assertEqual(l.stockEnd, 38)
+
+
+
+
+
 
 
 
