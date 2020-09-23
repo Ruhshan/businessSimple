@@ -1,5 +1,5 @@
 from catalogue.models import Product, Price
-from operation.models import Receive, DailySummary
+from operation.models import Receive, DailySummary, Issue
 
 
 def run():
@@ -8,15 +8,17 @@ def run():
 
     DailySummary.objects.all().delete()
     Receive.objects.all().delete()
+    Issue.objects.all().delete()
 
     Receive.objects.create(product=product, price=price, date="2020-09-21", unitPerPackage=5,
-                           receivedPackage=5, unit=25, bonusUnits=5)
-
+                           receivedPackage=2, unit=10, bonusUnits=5)
     Receive.objects.create(product=product, price=price, date="2020-09-15", unitPerPackage=5,
-                           receivedPackage=2, unit=10, bonusUnits=10)
+                           receivedPackage=2, unit=10, bonusUnits=5)
+    Receive.objects.create(product=product, price=price, date="2020-09-10", unitPerPackage=5,
+                           receivedPackage=2, unit=10, bonusUnits=5)
 
-    Receive.objects.create(product=product, price=price, date="2020-09-17", unitPerPackage=5,
-                           receivedPackage=3, unit=15, bonusUnits=10)
+    iss = Issue.objects.create(product=product, price=price, date="2020-09-17", unit=10)
+
 
 
 
