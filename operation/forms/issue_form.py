@@ -43,7 +43,7 @@ class IssueForm(ModelForm):
 
     class Meta:
         model = Issue
-        fields = ['product', 'price', 'date', 'unit', 'bonusUnits', 'receipt_no', 'customer']
+        fields = ['product', 'price', 'date', 'unit', 'bonusUnits', 'receipt_no', 'customer','remarks']
         widgets = {
             'product': Select(attrs={'v-model': 'product'}),
             'price': VueSelect()

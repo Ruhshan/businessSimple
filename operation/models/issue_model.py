@@ -15,6 +15,7 @@ class Issue(CodedBase):
     bonusUnits = models.PositiveIntegerField(default=0, verbose_name=_("Issued Bonus Units"))
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
     customer = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Customer Name"))
+    remarks = models.TextField(default="", verbose_name=_("Remarks"))
     
     def get_absolute_url(self):
         return reverse('operation-issue-detail', args=[self.pk])

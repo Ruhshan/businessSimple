@@ -16,6 +16,7 @@ class Receive(CodedBase):
     date = models.DateField(verbose_name=_("Receive Date"))
     price = models.ForeignKey(Price, on_delete=models.CASCADE)
     receipt_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_("Receipt No."))
+    remarks = models.TextField(default="",verbose_name=_("Remarks"))
 
     def get_absolute_url(self):
         return reverse('operation-receive-detail', args=[self.pk])
