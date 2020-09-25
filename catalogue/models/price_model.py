@@ -11,6 +11,6 @@ class Price(CodedBase):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     validFrom = models.DateField()
     validThrough = models.DateField()
-    buying = models.PositiveIntegerField()
-    selling = models.PositiveIntegerField()
+    buying = models.DecimalField(default=0.0, decimal_places=2,max_digits=10)
+    selling = models.DecimalField(default=0.0, decimal_places=2,max_digits=10)
     isActive = models.BooleanField(default=True)
