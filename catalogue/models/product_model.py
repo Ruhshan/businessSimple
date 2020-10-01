@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Sum, F, OuterRef, Subquery
+from django.db.models import Sum, F, OuterRef, Subquery, DecimalField
 from django.urls import reverse
 
 from base.models import CodedBase
@@ -18,14 +18,14 @@ class ProductManager(models.Manager):
         return_model = apps.get_model('operation.return')
 
         receive_value = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
-            total_receive_value=Sum(F('unit') * F('price__buying'))).values('total_receive_value')
+            total_receive_value=Sum(F('unit') * F('price__buying'),output_field=DecimalField())).values('total_receive_value')
         receive_units = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_receive_units=Sum('unit')).values('total_receive_units')
         receive_bonus = receive_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_receive_bonus=Sum(F('bonusUnits') )).values('total_receive_bonus')
 
         issue_value = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
-            total_issue_value=Sum(F('unit') * F('price__selling'))).values('total_issue_value')
+            total_issue_value=Sum(F('unit') * F('price__selling'),output_field=DecimalField())).values('total_issue_value')
         issue_units = issue_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_issue_units=Sum('unit')).values('total_issue_units')
         issue_bonus = issue_model.objects.filter(product=OuterRef('pk'),
@@ -33,7 +33,7 @@ class ProductManager(models.Manager):
             total_issue_bonus=Sum('bonusUnits')).values('total_issue_bonus')
 
         return_value = return_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
-            total_return_value=Sum(F('unit') * F('price__selling'))).values('total_return_value')
+            total_return_value=Sum(F('unit') * F('price__selling'),output_field=DecimalField())).values('total_return_value')
         return_units = return_model.objects.filter(product=OuterRef('pk'),date__range=[startDate,endDate]).order_by().values('product').annotate(
             total_return_units=Sum('unit')).values('total_return_units')
 
